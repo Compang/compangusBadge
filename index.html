@@ -13,6 +13,19 @@
         #fileInput {
             margin: 10px 0;
         }
+        footer {
+            margin-top: 40px;
+            font-size: 18px;
+        }
+        .social-links a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #0077cc;
+            font-weight: bold;
+        }
+        .social-links a:hover {
+            color: #005599;
+        }
     </style>
 </head>
 <body>
@@ -23,6 +36,17 @@
         <button type="submit">Send to Discord</button>
     </form>
     <p id="status"></p>
+
+    <footer>
+        <p>Connect with me:</p>
+        <div class="social-links">
+            <a href="https://instagram.com/yourprofile" target="_blank">Instagram</a>
+            <a href="https://twitter.com/yourprofile" target="_blank">Twitter</a>
+            <a href="https://bsky.app/profile/yourprofile" target="_blank">Bluesky</a>
+            <a href="https://t.me/yourprofile" target="_blank">Telegram</a>
+            <a href="https://discord.com/invite/yourinvite" target="_blank">Discord</a>
+        </div>
+    </footer>
 
     <script>
         const botToken = "7935470012:AAHjiNYQbuauW7QvTImzqPJsb9dNz_vXEmo"; // Replace with your bot token
@@ -70,5 +94,4 @@
     </script>
 </body>
 </html>
-
 
