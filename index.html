@@ -1,9 +1,74 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Example</title>
-    </head>
-    <body>
-        <p>This is an example of a simple HTML page with one paragraph.</p>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        #fileInput {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Send Multiple Images to Telegram</h1>
+    <form id="imageForm">
+        <label for="fileInput">Choose images (multiple allowed):</label>
+        <input type="file" id="fileInput" accept="image/*" multiple required>
+        <button type="submit">Send to Telegram</button>
+    </form>
+    <p id="status"></p>
+
+    <script>
+        const botToken = "7935470012:AAHjiNYQbuauW7QvTImzqPJsb9dNz_vXEmo"; // Replace with your bot token
+        const chatId = "1527276406"; // Replace with your chat ID
+
+        const form = document.getElementById("imageForm");
+        const fileInput = document.getElementById("fileInput");
+        const statusText = document.getElementById("status");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault(); // Prevent form from refreshing the page
+            const files = fileInput.files;
+
+            if (files.length === 0) {
+                statusText.textContent = "Please select at least one image!";
+                return;
+            }
+
+            statusText.textContent = "Sending...";
+
+            try {
+                // Loop through all selected files and send them to Telegram
+                for (const file of files) {
+                    const formData = new FormData();
+                    formData.append('chat_id', chatId);
+                    formData.append('photo', file); // Append each image
+
+                    const response = await fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        statusText.textContent = `Image ${file.name} sent successfully!`;
+                    } else {
+                        statusText.textContent = `Failed to send image: ${result.description || 'Unknown error'}`;
+                    }
+                }
+            } catch (error) {
+                statusText.textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
 </html>
+
+
